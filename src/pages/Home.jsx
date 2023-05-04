@@ -1,5 +1,11 @@
+import Main from "../components/Main";
+
 const Home = () => {
-  return <div className="text-white"></div>;
+  return (
+    <>
+      <Main />
+    </>
+  );
 };
 
 export default Home;
