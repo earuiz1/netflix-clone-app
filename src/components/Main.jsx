@@ -28,12 +28,12 @@ const Main = () => {
   console.log(movies);
   console.log(randomMovie);
   return (
-    <div className="w-full h-[500px]">
+    <div className="w-full h-[500px] mb-8">
       <div className="h-full w-full bg-slate-100 relative">
         <div className="bg-slate-900/70 absolute w-full h-full z-[10]"></div>
         <img
           src={`https://image.tmdb.org/t/p/original/${randomMovie?.backdrop_path}`}
-          alt=""
+          alt={randomMovie?.original_title}
           className="w-full h-full object-cover"
         />
         <div className="flex flex-col absolute top-1/2 transform -translate-y-1/2 gap-4 mx-6 z-[11]">
