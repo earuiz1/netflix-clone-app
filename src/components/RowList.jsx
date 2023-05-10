@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import MovieItem from "./MovieItem";
+import { useState, useEffect } from "react";
+import Movie from "./Movie";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const RowList = ({ title, fetchUrl, id }) => {
   const [movies, setMovies] = useState([]);
-  //const [isOver, setIsOver] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -41,7 +40,7 @@ const RowList = ({ title, fetchUrl, id }) => {
           />
           {movies.map((movie, index) => {
             return (
-              <MovieItem
+              <Movie
                 key={index}
                 id={movie?.id}
                 title={movie?.title}
