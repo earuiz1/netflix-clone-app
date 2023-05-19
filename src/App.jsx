@@ -1,14 +1,17 @@
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { routes } from "./routers/routes";
-import { ModalProvider } from "./context/ModalContext";
+import Modal from "./components/UI/Modal";
+import { useSelector } from "react-redux";
 
 const router = createHashRouter(routes);
 
 const App = () => {
+  const isOpen = useSelector((state) => state.isOpen);
   return (
-    <ModalProvider>
+    <>
+      {isOpen && <Modal />}
       <RouterProvider router={router} />;
-    </ModalProvider>
+    </>
   );
 };
 

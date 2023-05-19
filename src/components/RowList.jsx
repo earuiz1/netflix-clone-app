@@ -15,8 +15,6 @@ const RowList = ({ title, fetchUrl, id }) => {
     fetchMovies();
   }, []);
 
-  //console.log("n", movies);
-
   const slideToLeft = () => {
     document.querySelector(`#rowSlider${id}`).scrollLeft -= 300;
   };
@@ -24,6 +22,8 @@ const RowList = ({ title, fetchUrl, id }) => {
   const slideToRight = () => {
     document.querySelector(`#rowSlider${id}`).scrollLeft += 300;
   };
+
+  console.log("Rendering rows");
 
   return (
     <>
@@ -38,13 +38,17 @@ const RowList = ({ title, fetchUrl, id }) => {
             size={40}
             onClick={slideToLeft}
           />
-          {movies.map((movie, index) => {
+          {movies.map((movie) => {
             return (
               <Movie
-                key={index}
-                id={movie?.id}
+                key={movie.id}
+                id={movie.id}
                 title={movie?.title}
                 backDropPath={movie?.backdrop_path}
+                overview={movie?.overview}
+                releaseDate={movie?.release_date}
+                language={movie?.original_language}
+                genresIDs={movie?.genres_IDS}
               />
             );
           })}

@@ -25,8 +25,7 @@ const Main = () => {
   //Get the rating position of the tranding movie
   let ratingPosition = movies.indexOf(randomMovie) + 1;
 
-  console.log(movies);
-  console.log(randomMovie);
+  console.log("Render");
   return (
     <div className="w-full h-[500px] mb-8">
       <div className="h-full w-full bg-slate-100 relative">
