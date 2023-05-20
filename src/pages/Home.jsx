@@ -1,7 +1,5 @@
 import Main from "../components/Main";
 import RowList from "../components/RowList";
-// import Modal from "../components/UI/Modal";
-// import { useSelector } from "react-redux";
 
 const Home = () => {
   const rows = [

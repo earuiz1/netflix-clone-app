@@ -7,13 +7,17 @@ const Main = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/trending/movie/week?api_key=${
-          import.meta.env.VITE_MOVIES_API_KEY
-        }`
-      );
-      const data = await response.json();
-      setMovies(data.results);
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/trending/movie/week?api_key=${
+            import.meta.env.VITE_MOVIES_API_KEY
+          }`
+        );
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchMovies();

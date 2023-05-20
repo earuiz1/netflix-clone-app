@@ -7,9 +7,13 @@ const RowList = ({ title, fetchUrl, id }) => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await fetch(fetchUrl);
-      const data = await response.json();
-      setMovies(data.results);
+      try {
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchMovies();
@@ -48,7 +52,7 @@ const RowList = ({ title, fetchUrl, id }) => {
                 overview={movie?.overview}
                 releaseDate={movie?.release_date}
                 language={movie?.original_language}
-                genresIDs={movie?.genres_IDS}
+                genresIDs={movie?.genre_ids}
               />
             );
           })}

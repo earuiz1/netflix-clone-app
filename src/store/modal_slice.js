@@ -10,8 +10,15 @@ const modalSlice = createSlice({
   initialState: initialModalState,
   reducers: {
     openModal(state, action) {
-      const { id, title, backDropPath, overview, releaseDate, language } =
-        action.payload;
+      const {
+        id,
+        title,
+        backDropPath,
+        overview,
+        releaseDate,
+        language,
+        genresIDs,
+      } = action.payload;
 
       state.modalInfo = {
         id,
@@ -20,6 +27,7 @@ const modalSlice = createSlice({
         overview,
         releaseDate,
         language,
+        genresIDs,
       };
 
       state.isOpen = true;
