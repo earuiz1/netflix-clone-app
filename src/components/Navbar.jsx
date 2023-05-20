@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <div className="flex absolute w-full justify-between items-center py-4 px-6 z-[100]">
@@ -5,10 +7,16 @@ const Navbar = () => {
         Netflix
       </h1>
       <div className="flex gap-4">
-        <button className="text-slate-50 text-sm">Sign In</button>
-        <button className="text-slate-50 text-sm bg-red-600 px-4 py-2 rounded-md">
-          Sign Up
-        </button>
+        <Link to="login">
+          <button className="text-slate-50 text-sm font-bold px-4 py-2 rounded-md">
+            Sign In
+          </button>
+        </Link>
+        <Link to="signUp">
+          <button className="text-slate-50 text-sm bg-red-600 font-bold px-4 py-2 rounded-md">
+            Sign Up
+          </button>
+        </Link>
       </div>
     </div>
   );
