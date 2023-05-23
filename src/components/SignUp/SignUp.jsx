@@ -1,6 +1,36 @@
 import SignUpImg from "../../assets/SignUpBackground.jpg";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../fireabase";
 
 const SignUp = () => {
+  const onSubmit = async (values) => {
+    //console.log(values);
+
+    //TODO - Create user
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      values.email,
+      values.password
+    );
+
+    /* Getting the user object from the userCredentials object. */
+    const user = userCredentials.user;
+
+    console.log(user);
+
+    //Reset user inputs
+    reset();
+  };
+  /* React Hook Form */
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   return (
     <section className="w-full h-screen md:h-full relative">
       <div className="bg-slate-950/50 absolute z-[90] w-full h-full"></div>
@@ -13,7 +43,10 @@ const SignUp = () => {
             Watch anywhere. Cancel anytime.
           </span>
         </div>
-        <form className="flex flex-col w-full gap-6">
+        <form
+          className="flex flex-col w-full gap-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
@@ -21,7 +54,18 @@ const SignUp = () => {
             >
               Please enter your email:
             </label>
-            <input type="email" className="py-2 rounded-sm" />
+            <input
+              type="email"
+              className="py-2 rounded-sm"
+              {...register("email", {
+                required: "This field is required!",
+              })}
+            />
+            {errors.email && (
+              <p className="text-red-500 font-bold text-sm underline">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label
@@ -30,11 +74,31 @@ const SignUp = () => {
             >
               Please enter your password:
             </label>
-            <input type="password" className="py-2 rounded-sm" />
+            <input
+              type="password"
+              className="py-2 rounded-sm"
+              {...register("password", {
+                required: "This field is required!",
+              })}
+            />
+            {errors.password && (
+              <p className="text-red-500 font-bold text-sm underline">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-          <button className="bg-[#DC3B30] text-slate-100 font-bold py-2">
+          <button className="bg-[#DC3B30] text-slate-100 text-sm font-bold py-3 mt-2">
             Create Account
           </button>
+          <div className="flex gap-2">
+            <input type="checkbox" className="checked:bg-blue-500" />
+            <span className="text-slate-100 text-sm">Remember Me</span>
+          </div>
+          <Link to="../login">
+            <span className="text-slate-100 text-sm hover:underline">
+              Already subscribed to Netflix? Sign In
+            </span>
+          </Link>
         </form>
       </div>
       <img
