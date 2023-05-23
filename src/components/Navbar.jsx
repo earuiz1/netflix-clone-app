@@ -11,6 +11,7 @@ const Navbar = () => {
       .then(() => {
         // Sign-out successful.
         alert("Sign-out successful!");
+        //navigate("");
       })
       .catch((error) => {
         // An error happened.

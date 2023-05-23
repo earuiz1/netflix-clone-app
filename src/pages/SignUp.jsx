@@ -1,13 +1,13 @@
-import SignUp from "../components/SignUp/SignUp";
+import SignUpContent from "../components/SignUp/SignUpContent";
 import PopCornBanner from "../components/SignUp/PopCornBanner";
 
-const SignUpPage = () => {
+const SignUp = () => {
   return (
     <>
-      <SignUp />
+      <SignUpContent />
       <PopCornBanner />
     </>
   );
 };
 
-export default SignUpPage;
+export default SignUp;
