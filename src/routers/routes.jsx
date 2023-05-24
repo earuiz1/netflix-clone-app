@@ -2,6 +2,8 @@ import RootLayout from "../pages/RootLayout";
 import HomePage from "../pages/Home";
 import LoginPage from "../pages/Login";
 import SignUpPage from "../pages/SignUp";
+import AccountPage from "../pages/Account";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const routes = [
   {
@@ -20,6 +22,14 @@ export const routes = [
       {
         path: "signUp",
         element: <SignUpPage />,
+      },
+      {
+        path: "account",
+        element: (
+          <ProtectedRoute>
+            <AccountPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

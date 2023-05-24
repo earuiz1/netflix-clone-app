@@ -1,10 +1,28 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginImg from "../../assets/SignUpBackground.jpg";
+import { auth } from "../../fireabase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginContent = () => {
+  const navigate = useNavigate();
   const onSubmit = async (values) => {
-    console.log(values);
+    try {
+      console.log(values);
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = userCredentials.user;
+
+      reset();
+      navigate("..");
+
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const {
     handleSubmit,

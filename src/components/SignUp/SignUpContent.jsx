@@ -1,27 +1,33 @@
 import SignUpImg from "../../assets/SignUpBackground.jpg";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../fireabase";
 
 const SignUpContent = () => {
+  const navigate = useNavigate();
   const onSubmit = async (values) => {
-    //console.log(values);
+    try {
+      //TODO - Create user
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
 
-    //TODO - Create user
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
+      /* Getting the user object from the userCredentials object. */
+      const user = userCredentials.user;
 
-    /* Getting the user object from the userCredentials object. */
-    const user = userCredentials.user;
+      console.log(user);
 
-    console.log(user);
+      //Reset user inputs
+      reset();
 
-    //Reset user inputs
-    reset();
+      //Go to the main page
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   /* React Hook Form */
   const {
