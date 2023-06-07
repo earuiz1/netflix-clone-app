@@ -2,6 +2,9 @@ import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { modalActions } from "../../store/index";
 import { useEffect, useState, useMemo } from "react";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import useAuth from "../../custom-hooks/useAuth";
+import { db } from "../../fireabase";
 
 const ModalOverlay = () => {
   const [genres, setGenres] = useState([]);
@@ -16,6 +19,8 @@ const ModalOverlay = () => {
     overview,
     genresIDs,
   } = useSelector((state) => state.modalInfo);
+
+  const { currentUser } = useAuth();
 
   // Combine the two useEffect hooks: Since both hooks are responsible for fetching data, you can combine them into a single useEffect hook to reduce the number of network requests.
   useEffect(() => {
@@ -50,8 +55,20 @@ const ModalOverlay = () => {
     [genres, genresIDs]
   );
 
+  //Close Modal
   const closeModalHandler = () => {
     dispatch(modalActions.closeModal());
+  };
+
+  const favoritesHandler = async () => {
+    if (currentUser?.uid) {
+      // Create an initial document to update.
+      const ref = doc(db, "users", currentUser.uid);
+
+      await updateDoc(ref, {
+        savedMovies: arrayUnion({ id, title, overview }),
+      });
+    }
   };
 
   return (
@@ -87,9 +104,10 @@ const ModalOverlay = () => {
         Cast: {cast.map((c) => c.name).join(", ")}
       </span>
       <span className="text-slate-100 text-sm font-mediun">{overview}</span>
-      <button className="bg-slate-100 font-medium p-2 text-slate-900 rounde-sm">
-        Add To Favorites
-      </button>
+      <button
+        onClick={favoritesHandler}
+        className="bg-slate-100 font-medium p-2 text-slate-900 rounde-sm"
+      ></button>
     </div>
   );
 };

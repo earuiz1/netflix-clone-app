@@ -2,23 +2,35 @@ import SignUpImg from "../../assets/SignUpBackground.jpg";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../fireabase";
+import { auth, db } from "../../fireabase";
+import { setDoc, doc } from "firebase/firestore";
 
 const SignUpContent = () => {
   const navigate = useNavigate();
-  const onSubmit = async (values) => {
+
+  /* React Hook Form */
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async ({ email, password }) => {
     try {
       //TODO - Create user
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
-        values.email,
-        values.password
+        email,
+        password
       );
 
-      /* Getting the user object from the userCredentials object. */
       const user = userCredentials.user;
 
-      console.log(user);
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        savedMovies: [],
+      });
 
       //Reset user inputs
       reset();
@@ -29,14 +41,6 @@ const SignUpContent = () => {
       console.log(error);
     }
   };
-  /* React Hook Form */
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm();
-
   return (
     <section className="w-full h-screen xl:h-full relative">
       <div className="bg-slate-950/50 absolute z-[90] w-full h-full"></div>

@@ -6,13 +6,21 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginContent = () => {
   const navigate = useNavigate();
-  const onSubmit = async (values) => {
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async ({ email, password }) => {
     try {
-      console.log(values);
+      //console.log(values);
       const userCredentials = await signInWithEmailAndPassword(
         auth,
-        values.email,
-        values.password
+        email,
+        password
       );
       const user = userCredentials.user;
 
@@ -24,12 +32,7 @@ const LoginContent = () => {
       console.log(error);
     }
   };
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm();
+
   return (
     <section className="w-full h-screen xl:h-full relative">
       <div className="bg-slate-950/50 absolute z-[90] w-full h-full"></div>
