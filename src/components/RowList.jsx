@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Movie from "./Movie";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
-const RowList = ({ title, fetchUrl, id }) => {
+const RowList = ({ title, fetchUrl }) => {
   const [movies, setMovies] = useState([]);
+  const rowSliderRef = useRef(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -20,11 +21,11 @@ const RowList = ({ title, fetchUrl, id }) => {
   }, []);
 
   const slideToLeft = () => {
-    document.querySelector(`#rowSlider${id}`).scrollLeft -= 300;
+    rowSliderRef.current.scrollLeft -= 300;
   };
 
   const slideToRight = () => {
-    document.querySelector(`#rowSlider${id}`).scrollLeft += 300;
+    rowSliderRef.current.scrollLeft += 300;
   };
 
   console.log("Rendering rows");
@@ -34,7 +35,7 @@ const RowList = ({ title, fetchUrl, id }) => {
       <h3 className="text-slate-100 text-lg font-bold px-6 my-2 ">{title}</h3>
       <div className="relative flex w-full h-[250px] pl-6 group mb-6">
         <div
-          id={`rowSlider${id}`}
+          ref={rowSliderRef}
           className="flex overflow-x-scroll scrollbar-hide scroll-smooth gap-3"
         >
           <AiOutlineArrowLeft

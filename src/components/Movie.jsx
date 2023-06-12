@@ -1,6 +1,7 @@
 import { BsFillPlayFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../store/index";
+import { MdFavoriteBorder } from "react-icons/md";
 
 const Movie = ({
   id,
@@ -28,10 +29,14 @@ const Movie = ({
   };
   return (
     <div className="relative h-full min-w-[200px]">
-      <div className="absolute bg-slate-950 opacity-0 hover:opacity-90 w-full h-full z-[12] cursor-pointer">
-        <div className="flex flex-col justify-evenly items-center w-full h-full">
+      <div className="absolute bg-slate-950 opacity-0 hover:opacity-90 w-full h-full z-[12]">
+        <div className="flex flex-col justify-around items-center w-full h-full">
+          <MdFavoriteBorder
+            size={25}
+            className="fill-slate-100 self-start ml-4 cursor-pointer"
+          />
           <BsFillPlayFill
-            className="fill-slate-100"
+            className="fill-slate-100 cursor-pointer"
             size={50}
             onClick={openModalHandler}
           />

@@ -30,14 +30,7 @@ const Home = () => {
     <>
       <Main />
       {rows.map((row) => {
-        return (
-          <RowList
-            key={row.id}
-            id={row.id}
-            title={row.title}
-            fetchUrl={row.url}
-          />
-        );
+        return <RowList key={row.id} title={row.title} fetchUrl={row.url} />;
       })}
     </>
   );

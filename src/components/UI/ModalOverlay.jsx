@@ -2,9 +2,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { modalActions } from "../../store/index";
 import { useEffect, useState, useMemo } from "react";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
-import useAuth from "../../custom-hooks/useAuth";
-import { db } from "../../fireabase";
 
 const ModalOverlay = () => {
   const [genres, setGenres] = useState([]);
@@ -20,7 +17,7 @@ const ModalOverlay = () => {
     genresIDs,
   } = useSelector((state) => state.modalInfo);
 
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
 
   // Combine the two useEffect hooks: Since both hooks are responsible for fetching data, you can combine them into a single useEffect hook to reduce the number of network requests.
   useEffect(() => {
@@ -60,16 +57,16 @@ const ModalOverlay = () => {
     dispatch(modalActions.closeModal());
   };
 
-  const favoritesHandler = async () => {
-    if (currentUser?.uid) {
-      // Create an initial document to update.
-      const ref = doc(db, "users", currentUser.uid);
+  // const favoritesHandler = async () => {
+  //   if (currentUser?.uid) {
+  //     // Create an initial document to update.
+  //     const ref = doc(db, "users", currentUser.uid);
 
-      await updateDoc(ref, {
-        savedMovies: arrayUnion({ id, title, overview }),
-      });
-    }
-  };
+  //     await updateDoc(ref, {
+  //       savedMovies: arrayUnion({ id, title, backDropPath }),
+  //     });
+  //   }
+  // };
 
   return (
     <div className="bg-slate-700 text-slate-100 absolute flex flex-col gap-4 min-w-[90%] md:min-w-[80%] lg:min-w-[70%] xl:min-w-[60%] rounded-md p-6 top-[20%] left-1/2 transform -translate-x-[50%] z-[103]">
@@ -104,10 +101,6 @@ const ModalOverlay = () => {
         Cast: {cast.map((c) => c.name).join(", ")}
       </span>
       <span className="text-slate-100 text-sm font-mediun">{overview}</span>
-      <button
-        onClick={favoritesHandler}
-        className="bg-slate-100 font-medium p-2 text-slate-900 rounde-sm"
-      ></button>
     </div>
   );
 };
