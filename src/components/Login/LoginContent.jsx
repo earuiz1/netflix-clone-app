@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import LoginImg from "../../assets/SignUpBackground.jpg";
+import LoginImg from "../../assets/MoviesBackground.jpg";
 import { auth } from "../../fireabase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 

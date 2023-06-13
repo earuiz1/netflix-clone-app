@@ -1,4 +1,4 @@
-import SignUpImg from "../../assets/SignUpBackground.jpg";
+import SignUpImg from "../../assets/MoviesBackground.jpg";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";

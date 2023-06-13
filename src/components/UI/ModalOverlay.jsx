@@ -71,7 +71,7 @@ const ModalOverlay = () => {
   };
 
   return (
-    <div className="bg-slate-700 text-slate-100 absolute flex flex-col gap-4 min-w-[90%] md:min-w-[80%] lg:min-w-[70%] xl:min-w-[60%] rounded-md p-6 top-[20%] left-1/2 transform -translate-x-[50%] z-[103]">
+    <div className="bg-slate-700 text-slate-100 absolute flex flex-col gap-4 min-w-[90%] md:min-w-[80%] lg:min-w-[70%] xl:min-w-[60%] rounded-md p-8 top-[20%] left-1/2 transform -translate-x-[50%] z-[103]">
       <div className="w-full relative">
         <h4 className="font-bold text-center">{title}</h4>
       </div>
