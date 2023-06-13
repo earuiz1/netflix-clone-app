@@ -46,6 +46,19 @@ const ModalOverlay = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const scrollToModal = () => {
+      const windowHeight = window.innerHeight;
+      const modalDistance = windowHeight * 0.2;
+      window.scrollTo({
+        top: modalDistance,
+        behavior: "smooth",
+      });
+    };
+
+    scrollToModal();
+  }, []);
+
   // Use memoization for filterGenres: Since filterGenres depends on genres and genresIDs, you can memoize its value using the useMemo hook. This way, it will only be recalculated when its dependencies change.
   const filteredGenres = useMemo(
     () => genres?.filter((genre) => genresIDs.includes(genre.id)),
@@ -56,17 +69,6 @@ const ModalOverlay = () => {
   const closeModalHandler = () => {
     dispatch(modalActions.closeModal());
   };
-
-  // const favoritesHandler = async () => {
-  //   if (currentUser?.uid) {
-  //     // Create an initial document to update.
-  //     const ref = doc(db, "users", currentUser.uid);
-
-  //     await updateDoc(ref, {
-  //       savedMovies: arrayUnion({ id, title, backDropPath }),
-  //     });
-  //   }
-  // };
 
   return (
     <div className="bg-slate-700 text-slate-100 absolute flex flex-col gap-4 min-w-[90%] md:min-w-[80%] lg:min-w-[70%] xl:min-w-[60%] rounded-md p-6 top-[20%] left-1/2 transform -translate-x-[50%] z-[103]">

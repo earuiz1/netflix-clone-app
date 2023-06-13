@@ -17,17 +17,13 @@ const LoginContent = () => {
   const onSubmit = async ({ email, password }) => {
     try {
       //console.log(values);
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredentials.user;
+      await signInWithEmailAndPassword(auth, email, password);
+      //const user = userCredentials.user;
 
       reset();
       navigate("..");
 
-      console.log(user);
+      //console.log(user);
     } catch (error) {
       console.log(error);
     }

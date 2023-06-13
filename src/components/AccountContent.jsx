@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { IoCloseSharp } from "react-icons/io5";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../fireabase";
 import useAuth from "../custom-hooks/useAuth";
@@ -25,9 +26,6 @@ const AccountContent = () => {
 
   return (
     <>
-      <h3 className="text-slate-100 text-lg font-bold px-6 my-2 ">
-        My Favorites
-      </h3>
       <div className="relative flex w-full h-[250px] pl-6 group mb-6">
         <div
           ref={rowSliderRef}
@@ -35,9 +33,13 @@ const AccountContent = () => {
         >
           {movies.map((movie) => {
             return (
-              <div className="relative h-full max-w-[200px]" key={movie.id}>
+              <div className="relative h-full min-w-[200px]" key={movie.id}>
                 <div className="absolute bg-slate-950 opacity-0 hover:opacity-90 w-full h-full z-[12] cursor-pointer">
                   <div className="flex flex-col justify-evenly items-center w-full h-full">
+                    <IoCloseSharp
+                      className="fill-slate-100 absolute top-0 right-0"
+                      size={25}
+                    />
                     <h4 className="text-center text-sm font-medium text-slate-100 w-[80%]">
                       {movie.title}
                     </h4>

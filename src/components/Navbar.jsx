@@ -19,10 +19,11 @@ const Navbar = () => {
   };
   return (
     <div className="flex absolute w-full justify-between items-center py-4 px-6 z-[100]">
-      <h1 className="text-red-600 font-bold text-2xl md:text-3xl lg:text-4xl cursor-pointer">
-        Netflix
-      </h1>
-
+      <Link to="..">
+        <h1 className="text-red-600 font-bold text-2xl md:text-3xl lg:text-4xl cursor-pointer">
+          Netflix
+        </h1>
+      </Link>
       <div className="flex items-center gap-4">
         {!currentUser ? (
           <>
