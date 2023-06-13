@@ -17,10 +17,9 @@ const AccountContent = () => {
   }, [currentUser?.uid]);
 
   const deleteFavorite = async (id) => {
+    //Movie ref
+    const ref = doc(db, "users", `${currentUser?.uid}`);
     try {
-      //Reference to users
-      const ref = doc(db, "users", `${currentUser?.uid}`);
-
       //Remove favorite movie
       const filteredMovies = movies.filter((movie) => movie.id !== id);
 

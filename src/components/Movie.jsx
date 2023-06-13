@@ -5,7 +5,7 @@ import { modalActions } from "../store/index";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import useAuth from "../custom-hooks/useAuth";
 import { db } from "../fireabase";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 const Movie = ({
   id,
@@ -36,16 +36,45 @@ const Movie = ({
   };
 
   const addToFavorites = async () => {
-    if (currentUser?.uid) {
-      setFavorite(!favorite);
-      // Create an initial document to update.
-      const ref = doc(db, "users", currentUser.uid);
-
-      await updateDoc(ref, {
-        savedMovies: arrayUnion({ id, title, backDropPath }),
-      });
-    } else {
+    if (!currentUser?.uid) {
       alert("You must be logged in to add to favorites");
+      return;
+    }
+
+    //Movie Ref
+    const ref = doc(db, "users", `${currentUser?.uid}`);
+
+    try {
+      // Retrieve the document from Firestore
+      const documentSnapshot = await getDoc(ref);
+
+      if (documentSnapshot.exists()) {
+        // Document exists, retrieve the array field
+        const existingArray = documentSnapshot.data().savedMovies || [];
+
+        // Check if the ID already exists in the array
+        const isIdAlreadyPresent = existingArray.some((item) => item.id === id);
+
+        if (!isIdAlreadyPresent) {
+          setFavorite(!favorite);
+
+          // If the ID doesn't exist, add it to the array
+          const updatedArray = [...existingArray, { id, title, backDropPath }];
+
+          // Update the document in Firestore with the modified array
+          await updateDoc(ref, {
+            savedMovies: updatedArray,
+          });
+
+          console.log("Array updated successfully");
+        } else {
+          console.log("ID already exists in the array, no update necessary");
+        }
+      } else {
+        console.log("Document does not exist");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
