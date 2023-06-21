@@ -17,8 +17,6 @@ const ModalOverlay = () => {
     genresIDs,
   } = useSelector((state) => state.modalInfo);
 
-  // const { currentUser } = useAuth();
-
   // Combine the two useEffect hooks: Since both hooks are responsible for fetching data, you can combine them into a single useEffect hook to reduce the number of network requests.
   useEffect(() => {
     const fetchData = async () => {
@@ -89,20 +87,20 @@ const ModalOverlay = () => {
         />
       </div>
       <div className="flex justify-between">
-        <span className="text-sm text-slate-100">
+        <span className="text-xs md:text-sm text-slate-100">
           Language: {language === "en" && "English"}
         </span>
-        <span className="text-sm font-light text-slate-100 italic">
+        <span className="text-xs md:text-sm font-light text-slate-100 italic">
           Release Date: {releaseDate}
         </span>
       </div>
-      <span className="text-slate-100 text-sm font-mediun">
+      <span className="text-slate-100 text-xs md:text-sm ">
         Genres: {filteredGenres.map((genre) => genre.name).join(", ")}
       </span>
-      <span className="text-slate-100 text-sm font-mediun line-clamp-2">
+      <span className="text-slate-100 text-xs md:text-sm line-clamp-2">
         Cast: {cast.map((c) => c.name).join(", ")}
       </span>
-      <span className="text-slate-100 text-sm font-mediun">{overview}</span>
+      <span className="text-slate-100 text-xs md:text-sm">{overview}</span>
     </div>
   );
 };

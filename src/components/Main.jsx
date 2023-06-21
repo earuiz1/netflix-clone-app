@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { HiOutlineInformationCircle } from "react-icons/hi";
+import { modalActions } from "../store/index";
 
 const Main = () => {
   const [movies, setMovies] = useState([]);
@@ -48,19 +49,6 @@ const Main = () => {
           <span className="text-slate-100 line-clamp-3 text-sm md:text-base w-full md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%]">
             {randomMovie?.overview}
           </span>
-          <div className="flex gap-4">
-            <button className="flex items-center bg-slate-100 text-slate-900 px-4 py-2 rounded-sm">
-              <BsFillPlayFill size={25} />
-              <span className="text-sm md:text-base">Play</span>
-            </button>
-            <button className="flex items-center gap-2 bg-[#515250] text-slate-50 px-4 py-2 rounded-sm">
-              <HiOutlineInformationCircle
-                size={25}
-                className="stroke-slate-100"
-              />
-              <span className="text-sm md:text-base">More Information</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
