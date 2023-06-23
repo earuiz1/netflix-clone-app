@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialModalState = {
   modalInfo: {},
+  genres: {},
   isOpen: false,
 };
 
@@ -10,28 +11,14 @@ const modalSlice = createSlice({
   initialState: initialModalState,
   reducers: {
     openModal(state, action) {
-      const {
-        id,
-        title,
-        backDropPath,
-        overview,
-        releaseDate,
-        language,
-        genresIDs,
-      } = action.payload;
-
-      state.modalInfo = {
-        id,
-        title,
-        backDropPath,
-        overview,
-        releaseDate,
-        language,
-        genresIDs,
-      };
-
+      state.modalInfo = action.payload;
       state.isOpen = true;
     },
+
+    setGenres(state, action) {
+      state.genres = action.payload;
+    },
+
     closeModal(state) {
       state.modalInfo = {};
       state.isOpen = false;

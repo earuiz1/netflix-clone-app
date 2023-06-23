@@ -7,32 +7,14 @@ import useAuth from "../custom-hooks/useAuth";
 import { db } from "../fireabase";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 
-const Movie = ({
-  id,
-  title,
-  backDropPath,
-  overview,
-  language,
-  releaseDate,
-  genresIDs,
-}) => {
+const Movie = ({ movie }) => {
   const [favorite, setFavorite] = useState(false);
+  const { id, title, poster_path } = movie;
+  const { currentUser } = useAuth();
   const dispatch = useDispatch();
 
-  const { currentUser } = useAuth();
-
   const openModalHandler = () => {
-    dispatch(
-      modalActions.openModal({
-        id,
-        title,
-        backDropPath,
-        overview,
-        language,
-        releaseDate,
-        genresIDs,
-      })
-    );
+    dispatch(modalActions.openModal(movie));
   };
 
   const addToFavorites = async () => {
@@ -59,7 +41,14 @@ const Movie = ({
           setFavorite(!favorite);
 
           // If the ID doesn't exist, add it to the array
-          const updatedArray = [...existingArray, { id, title, backDropPath }];
+          const updatedArray = [
+            ...existingArray,
+            {
+              id,
+              title,
+              poster_path,
+            },
+          ];
 
           // Update the document in Firestore with the modified array
           await updateDoc(ref, {
@@ -105,7 +94,7 @@ const Movie = ({
         </div>
       </div>
       <img
-        src={`https://image.tmdb.org/t/p/w500/${backDropPath}`}
+        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
         alt={title}
         loading="lazy"
         className="w-full h-full object-cover"

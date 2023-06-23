@@ -47,13 +47,14 @@ const RowList = ({ title, fetchUrl }) => {
             return (
               <Movie
                 key={movie.id}
-                id={movie.id}
-                title={movie?.title}
-                backDropPath={movie?.backdrop_path}
-                overview={movie?.overview}
-                releaseDate={movie?.release_date}
-                language={movie?.original_language}
-                genresIDs={movie?.genre_ids}
+                // id={movie.id}
+                // title={movie?.title}
+                // backDropPath={movie?.backdrop_path}
+                // overview={movie?.overview}
+                // releaseDate={movie?.release_date}
+                // language={movie?.original_language}
+                // genresIDs={movie?.genre_ids}
+                movie={movie}
               />
             );
           })}

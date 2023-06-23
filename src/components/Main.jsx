@@ -1,27 +1,36 @@
 import { useState, useEffect } from "react";
-import { BsFillPlayFill } from "react-icons/bs";
-import { HiOutlineInformationCircle } from "react-icons/hi";
 import { modalActions } from "../store/index";
+import { useDispatch } from "react-redux";
+// import { BsFillPlayFill } from "react-icons/bs";
+// import { HiOutlineInformationCircle } from "react-icons/hi";
 
 const Main = () => {
   const [movies, setMovies] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/trending/movie/week?api_key=${
-            import.meta.env.VITE_MOVIES_API_KEY
-          }`
-        );
-        const data = await response.json();
-        setMovies(data.results);
+        const [genresResponse, trendingMoviesRespone] = await Promise.all([
+          fetch(
+            `https://api.themoviedb.org/3/genre/movie/list?api_key=${
+              import.meta.env.VITE_MOVIES_API_KEY
+            }`
+          ).then((response) => response.json()),
+          fetch(
+            `https://api.themoviedb.org/3/trending/movie/week?api_key=${
+              import.meta.env.VITE_MOVIES_API_KEY
+            }`
+          ).then((response) => response.json()),
+        ]);
+        dispatch(modalActions.setGenres(genresResponse.genres));
+        setMovies(trendingMoviesRespone.results);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchMovies();
+    fetchData();
   }, []);
 
   //Get a random show from the 10 most popular list
@@ -29,6 +38,8 @@ const Main = () => {
 
   //Get the rating position of the tranding movie
   let ratingPosition = movies.indexOf(randomMovie) + 1;
+
+  console.log(movies);
 
   return (
     <div className="w-full h-[500px] mb-8">
