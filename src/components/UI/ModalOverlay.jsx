@@ -65,7 +65,7 @@ const ModalOverlay = () => {
   };
 
   return (
-    <div className="bg-[#151415] text-slate-100 absolute flex flex-col lg:flex-row w-[90%] lg:w-[80%] lg:h-[500px] rounded-md p-6 top-[20%] left-1/2 transform -translate-x-[50%] z-[103] gap-8 shadow-lg shadow-slate-600">
+    <div className="bg-[#151415] text-slate-100 absolute flex flex-col lg:flex-row w-[90%] lg:w-[80%] lg:h-[500px] rounded-md p-8 top-[20%] left-1/2 transform -translate-x-[50%] z-[103] gap-8 shadow-lg shadow-slate-600">
       <IoCloseSharp
         onClick={closeModalHandler}
         size={30}
