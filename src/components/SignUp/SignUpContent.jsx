@@ -57,35 +57,55 @@ const SignUpContent = () => {
           className="flex flex-col w-full gap-6"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-2">
+          <div className="floating-input relative">
             <input
               type="email"
-              placeholder="Email"
-              className="rounded-sm bg-[#333333] text-slate-100 p-2 placeholder:text-sm"
+              id="email"
+              className={`bg-[#323233] focus:outline-none rounded-md focus:shadow-sm w-full p-3 h-[55px] text-sm text-slate-100 ${
+                errors.email && "border-b-2 border-[#e87c03]"
+              }`}
+              placeholder=" Email address"
+              autoComplete="off"
               {...register("email", {
-                required: "This field is required!",
+                required: "Please enter a valid email",
               })}
             />
             {errors.email && (
-              <p className="text-red-500 font-bold text-sm underline">
+              <p className="text-[#e87c03] font-medium text-sm mt-1">
                 {errors.email.message}
               </p>
             )}
+            <label
+              htmlFor="email"
+              className="absolute top-0 left-0 px-3 py-4 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out text-sm text-gray-400"
+            >
+              Email address
+            </label>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="floating-input relative">
             <input
               type="password"
-              placeholder="Password"
-              className="rounded-sm bg-[#333333] text-slate-100 p-2 placeholder:text-sm"
+              id="password"
+              className={`bg-[#323233] focus:outline-none rounded-md focus:shadow-sm w-full p-3 h-[55px] text-sm text-slate-100 ${
+                errors.password && "border-b-2 border-[#e87c03]"
+              }`}
+              placeholder="password"
+              autoComplete="off"
               {...register("password", {
-                required: "This field is required!",
+                required: "Please enter a valid password",
               })}
             />
             {errors.password && (
-              <p className="text-red-500 font-bold text-sm underline">
+              <p className="text-[#e87c03] font-medium text-sm mt-1">
                 {errors.password.message}
               </p>
             )}
+            <label
+              htmlFor="password"
+              className="absolute top-0 left-0 px-3 py-4 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out text-sm text-gray-400"
+            >
+              Password
+            </label>
           </div>
           <button className="bg-[#DC3B30] text-slate-100 text-sm font-bold py-3 mt-2">
             Create Account
