@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../custom-hooks/useAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "../fireabase";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { currentUser } = useAuth();
@@ -11,10 +12,29 @@ const Navbar = () => {
   const signOutHandler = async () => {
     try {
       await signOut(auth);
-      console.log("Logout successful");
+      toast.success("Logout successful!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
       navigate("..");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     }
   };
   return (

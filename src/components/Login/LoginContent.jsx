@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginImg from "../../assets/MoviesBackground.jpg";
 import { auth } from "../../fireabase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const LoginContent = () => {
   const navigate = useNavigate();
@@ -19,13 +20,32 @@ const LoginContent = () => {
       //console.log(values);
       await signInWithEmailAndPassword(auth, email, password);
       //const user = userCredentials.user;
-
+      toast.success("Login successful!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
       reset();
       navigate("..");
 
       //console.log(user);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     }
   };
 

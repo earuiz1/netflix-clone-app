@@ -6,6 +6,7 @@ import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import useAuth from "../custom-hooks/useAuth";
 import { db } from "../fireabase";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Movie = ({ movie }) => {
   const [favorite, setFavorite] = useState(false);
@@ -19,7 +20,16 @@ const Movie = ({ movie }) => {
 
   const addToFavorites = async () => {
     if (!currentUser?.uid) {
-      alert("You must be logged in to add to favorites");
+      toast("Sign-in to add to favorites!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
       return;
     }
 
@@ -55,15 +65,43 @@ const Movie = ({ movie }) => {
             savedMovies: updatedArray,
           });
 
-          console.log("Array updated successfully");
+          toast.success("Movie added to favorites!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: 0,
+            theme: "dark",
+          });
         } else {
-          console.log("ID already exists in the array, no update necessary");
+          toast.error("Movie already in favorites!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: 0,
+            theme: "dark",
+          });
         }
       } else {
         console.log("Document does not exist");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     }
   };
   return (

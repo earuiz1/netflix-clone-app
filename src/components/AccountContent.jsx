@@ -4,6 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../fireabase";
 import useAuth from "../custom-hooks/useAuth";
+import { toast } from "react-toastify";
 
 const AccountContent = () => {
   const rowSliderRef = useRef(null);
@@ -27,8 +28,29 @@ const AccountContent = () => {
       await updateDoc(ref, {
         savedMovies: filteredMovies,
       });
+
+      toast.success("Movie successfully deleted!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     }
   };
 
@@ -68,7 +90,7 @@ const AccountContent = () => {
                     </div>
                   </div>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
                     alt={movie?.title}
                     loading="lazy"
                     className="w-full h-full object-cover"

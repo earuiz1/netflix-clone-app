@@ -101,7 +101,7 @@ const ModalOverlay = () => {
         <div>
           <p className="font-medium text-sm lg:text-base">Rating:</p>
           <p className="text-xs lg:text-sm text-slate-100">
-            {movie.vote_average
+            {movie?.vote_average
               ? `${movie?.vote_average.toFixed(2)} / 10`
               : "N/A"}
           </p>

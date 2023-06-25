@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../fireabase";
 import { setDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const SignUpContent = () => {
   const navigate = useNavigate();
@@ -32,6 +33,17 @@ const SignUpContent = () => {
         savedMovies: [],
       });
 
+      toast.success("User successfully created!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
+
       //Reset user inputs
       reset();
 
@@ -39,6 +51,16 @@ const SignUpContent = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "dark",
+      });
     }
   };
   return (
