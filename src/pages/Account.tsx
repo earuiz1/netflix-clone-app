@@ -1,3 +1,4 @@
+import React from "react";
 import AccountContent from "../components/AccountContent";
 
 const Account = () => {

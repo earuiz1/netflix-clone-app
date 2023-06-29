@@ -1,7 +1,8 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../custom-hooks/useAuth";
 import { signOut } from "firebase/auth";
-import { auth } from "../fireabase";
+import { auth } from "../firebase";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
@@ -22,7 +23,7 @@ const Navbar = () => {
         progress: 0,
         theme: "dark",
       });
-      navigate("..");
+      navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!", {
@@ -47,12 +48,12 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {!currentUser ? (
           <>
-            <Link to="login">
+            <Link to="/login">
               <button className="text-slate-50 text-sm font-bold px-4 py-2 rounded-md">
                 Sign In
               </button>
             </Link>
-            <Link to="signUp">
+            <Link to="/signUp">
               <button className="text-slate-50 text-sm bg-red-600 font-bold px-4 py-2 rounded-md">
                 Sign Up
               </button>
@@ -60,12 +61,12 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="account">
+            <Link to="/account">
               <button className="text-slate-50 text-sm font-bold px-4 py-2 rounded-md">
                 Account
               </button>
             </Link>
-            <Link to="..">
+            <Link to="/">
               <button
                 className="text-slate-50 text-sm bg-red-600 font-bold px-4 py-2 rounded-md"
                 onClick={signOutHandler}

@@ -1,3 +1,4 @@
+import React from "react";
 import Popcorn from "../../assets/Popcorn.svg";
 
 const PopCornBanner = () => {

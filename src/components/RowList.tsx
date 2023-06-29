@@ -1,10 +1,33 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Movie from "./Movie";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
-const RowList = ({ title, fetchUrl }) => {
-  const [movies, setMovies] = useState([]);
-  const rowSliderRef = useRef(null);
+type RowListProps = {
+  title: string;
+  fetchUrl: string;
+};
+
+interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+const RowList = ({ title, fetchUrl }: RowListProps) => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const rowSliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -21,11 +44,15 @@ const RowList = ({ title, fetchUrl }) => {
   }, []);
 
   const slideToLeft = () => {
-    rowSliderRef.current.scrollLeft -= 300;
+    if (rowSliderRef.current) {
+      rowSliderRef.current.scrollLeft -= 300;
+    }
   };
 
   const slideToRight = () => {
-    rowSliderRef.current.scrollLeft += 300;
+    if (rowSliderRef.current) {
+      rowSliderRef.current.scrollLeft += 300;
+    }
   };
 
   console.log("Rendering rows");
@@ -43,18 +70,17 @@ const RowList = ({ title, fetchUrl }) => {
             size={40}
             onClick={slideToLeft}
           />
-          {movies.map((movie) => {
+          {movies.map((movie: Movie) => {
             return (
               <Movie
                 key={movie.id}
-                // id={movie.id}
-                // title={movie?.title}
-                // backDropPath={movie?.backdrop_path}
-                // overview={movie?.overview}
-                // releaseDate={movie?.release_date}
-                // language={movie?.original_language}
-                // genresIDs={movie?.genre_ids}
-                movie={movie}
+                id={movie.id}
+                title={movie.title}
+                poster_path={movie.poster_path}
+                backdrop_path={movie.backdrop_path}
+                release_date={movie.release_date}
+                overview={movie.overview}
+                genre_ids={movie.genre_ids}
               />
             );
           })}

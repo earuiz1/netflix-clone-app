@@ -1,15 +1,25 @@
 import { IoCloseSharp } from "react-icons/io5";
-import { useSelector, useDispatch } from "react-redux";
-import { modalActions } from "../../store/index";
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { closeModal } from "../../redux/modal_slice";
+
+interface Cast {
+  name: string;
+}
+
+interface Movie {
+  runtime: number;
+  status: string;
+  vote_average: number;
+}
 
 const ModalOverlay = () => {
-  const [cast, setCast] = useState([]);
-  const [movie, setMovie] = useState({});
+  const [cast, setCast] = useState<Cast[]>([]);
+  const [movie, setMovie] = useState<Movie | undefined>();
   const { id, genre_ids, title, release_date, backdrop_path, overview } =
-    useSelector((state) => state.modalInfo);
-  const genres = useSelector((state) => state.genres);
-  const dispatch = useDispatch();
+    useAppSelector((state) => state.modal);
+  const genres = useAppSelector((state) => state.genres);
+  const dispatch = useAppDispatch();
 
   // Combine the two useEffect hooks: Since both hooks are responsible for fetching data, you can combine them into a single useEffect hook to reduce the number of network requests.
   useEffect(() => {
@@ -55,13 +65,13 @@ const ModalOverlay = () => {
 
   // Use memoization for filterGenres: Since filterGenres depends on genres and genresIDs, you can memoize its value using the useMemo hook. This way, it will only be recalculated when its dependencies change.
   const filteredGenres = useMemo(
-    () => genres?.filter((genre) => genre_ids.includes(genre.id)),
+    () => genres.filter((genre) => genre_ids.includes(genre.id)),
     [genres, genre_ids]
   );
 
   //Close Modal
   const closeModalHandler = () => {
-    dispatch(modalActions.closeModal());
+    dispatch(closeModal());
   };
 
   return (
@@ -84,7 +94,7 @@ const ModalOverlay = () => {
           <h4 className="font-bold text-2xl lg:text-4xl">{title}</h4>
           <p className="text-xs lg:text-sm text-slate-100">
             {`${release_date} | ${filteredGenres
-              .map((genre) => genre?.name)
+              .map((genre) => genre.name)
               .join(", ")} | ${movie?.runtime} minutes | ${movie?.status}`}
           </p>
         </div>
@@ -95,14 +105,14 @@ const ModalOverlay = () => {
         <div>
           <p className="font-medium text-sm lg:text-base">Cast:</p>
           <p className="text-slate-100 text-xs lg:text-sm line-clamp-2">
-            {cast.map((c) => c.name).join(", ")}
+            {cast ? cast.map((c) => c.name).join(", ") : "N/A"}
           </p>
         </div>
         <div>
           <p className="font-medium text-sm lg:text-base">Rating:</p>
           <p className="text-xs lg:text-sm text-slate-100">
             {movie?.vote_average
-              ? `${movie?.vote_average.toFixed(2)} / 10`
+              ? `${movie.vote_average.toFixed(2)} / 10`
               : "N/A"}
           </p>
         </div>

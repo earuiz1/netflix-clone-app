@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import BackDrop from "./BackDrop";
 import ModalOverlay from "./ModalOverlay";
 
 const Modal = () => {
-  const [domReady, setDomReady] = useState(false);
+  const [domReady, setDomReady] = useState<boolean>(false);
 
   useEffect(() => {
     setDomReady(true);
@@ -14,11 +14,11 @@ const Modal = () => {
     <>
       {ReactDOM.createPortal(
         <BackDrop />,
-        document.getElementById("backdrop-root")
+        document.getElementById("backdrop-root")!
       )}
       {ReactDOM.createPortal(
         <ModalOverlay />,
-        document.getElementById("modal-root")
+        document.getElementById("modal-root")!
       )}
     </>
   ) : null;

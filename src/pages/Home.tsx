@@ -1,8 +1,15 @@
 import Main from "../components/Main";
 import RowList from "../components/RowList";
+import React from "react";
 
-const Home = () => {
-  const rows = [
+interface Row {
+  id: string;
+  title: string;
+  url: string;
+}
+
+const Home: React.FC = () => {
+  const rows: Row[] = [
     {
       id: "row_1",
       title: "Popular in Netflix",
@@ -29,7 +36,7 @@ const Home = () => {
   return (
     <>
       <Main />
-      {rows.map((row) => {
+      {rows.map((row: Row) => {
         return <RowList key={row.id} title={row.title} fetchUrl={row.url} />;
       })}
     </>

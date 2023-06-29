@@ -1,9 +1,15 @@
-import { useForm } from "react-hook-form";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import LoginImg from "../../assets/MoviesBackground.jpg";
-import { auth } from "../../fireabase";
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const LoginContent = () => {
   const navigate = useNavigate();
@@ -13,9 +19,12 @@ const LoginContent = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>();
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({
+    email,
+    password,
+  }: FormValues) => {
     try {
       //console.log(values);
       await signInWithEmailAndPassword(auth, email, password);

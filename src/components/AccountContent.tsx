@@ -1,14 +1,20 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "../fireabase";
+import { db } from "../firebase";
 import useAuth from "../custom-hooks/useAuth";
 import { toast } from "react-toastify";
 
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+}
+
 const AccountContent = () => {
-  const rowSliderRef = useRef(null);
-  const [movies, setMovies] = useState([]);
+  const rowSliderRef = useRef<HTMLDivElement>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -17,7 +23,7 @@ const AccountContent = () => {
     });
   }, [currentUser?.uid]);
 
-  const deleteFavorite = async (id) => {
+  const deleteFavorite = async (id: number) => {
     //Movie ref
     const ref = doc(db, "users", `${currentUser?.uid}`);
     try {
@@ -55,15 +61,19 @@ const AccountContent = () => {
   };
 
   const slideToLeft = () => {
-    rowSliderRef.current.scrollLeft -= 300;
+    if (rowSliderRef.current) {
+      rowSliderRef.current.scrollLeft -= 300;
+    }
   };
 
   const slideToRight = () => {
-    rowSliderRef.current.scrollLeft += 300;
+    if (rowSliderRef.current) {
+      rowSliderRef.current.scrollLeft += 300;
+    }
   };
   return (
     <>
-      {movies.length > 0 ? (
+      {movies?.length > 0 ? (
         <div className="relative flex w-full h-[250px] pl-2 group mt-6">
           <div
             ref={rowSliderRef}
@@ -74,7 +84,7 @@ const AccountContent = () => {
               size={40}
               onClick={slideToLeft}
             />
-            {movies.map((movie) => {
+            {movies.map((movie: Movie) => {
               return (
                 <div className="relative h-full min-w-[200px]" key={movie.id}>
                   <div className="absolute bg-slate-950 opacity-0 hover:opacity-90 w-full h-full z-[12] cursor-pointer">
@@ -82,7 +92,7 @@ const AccountContent = () => {
                       <IoCloseSharp
                         className="fill-slate-100 absolute top-0 right-0"
                         size={25}
-                        onClick={() => deleteFavorite(movie?.id)}
+                        onClick={() => deleteFavorite(movie.id)}
                       />
                       <h4 className="text-center text-sm font-medium text-slate-100 w-[80%]">
                         {movie?.title}
@@ -90,8 +100,8 @@ const AccountContent = () => {
                     </div>
                   </div>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
-                    alt={movie?.title}
+                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                    alt={movie.title}
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />

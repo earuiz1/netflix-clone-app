@@ -1,12 +1,28 @@
-import { useState, useEffect } from "react";
-import { modalActions } from "../store/index";
-import { useDispatch } from "react-redux";
-// import { BsFillPlayFill } from "react-icons/bs";
-// import { HiOutlineInformationCircle } from "react-icons/hi";
+import React, { useState, useEffect } from "react";
+import { useAppDispatch } from "../redux/store";
+import { setGenres } from "../redux/modal_slice";
 
-const Main = () => {
-  const [movies, setMovies] = useState([]);
-  const dispatch = useDispatch();
+interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+const Main: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +39,7 @@ const Main = () => {
             }`
           ).then((response) => response.json()),
         ]);
-        dispatch(modalActions.setGenres(genresResponse.genres));
+        dispatch(setGenres(genresResponse.genres));
         setMovies(trendingMoviesRespone.results);
       } catch (error) {
         console.log(error);
@@ -37,9 +53,7 @@ const Main = () => {
   const randomMovie = movies[Math.floor(Math.random() * 10)];
 
   //Get the rating position of the tranding movie
-  let ratingPosition = movies.indexOf(randomMovie) + 1;
-
-  console.log(movies);
+  let ratingPosition: number = movies?.indexOf(randomMovie) + 1;
 
   return (
     <div className="w-full h-[500px] mb-8">

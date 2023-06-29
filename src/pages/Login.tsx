@@ -1,3 +1,4 @@
+import React from "react";
 import LoginContent from "../components/Login/LoginContent";
 
 const Login = () => {

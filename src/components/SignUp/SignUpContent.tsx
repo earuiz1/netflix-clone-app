@@ -1,11 +1,16 @@
+import React from "react";
 import SignUpImg from "../../assets/MoviesBackground.jpg";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../fireabase";
+import { auth, db } from "../../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
+interface FormValues {
+  email: string;
+  password: string;
+}
 const SignUpContent = () => {
   const navigate = useNavigate();
 
@@ -15,9 +20,12 @@ const SignUpContent = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>();
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({
+    email,
+    password,
+  }: FormValues) => {
     try {
       //TODO - Create user
       const userCredentials = await createUserWithEmailAndPassword(
