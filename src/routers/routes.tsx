@@ -17,15 +17,15 @@ export const routes = [
         element: <HomePage />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <LoginPage />,
       },
       {
-        path: "signUp",
+        path: "/signUp",
         element: <SignUpPage />,
       },
       {
-        path: "account",
+        path: "/account",
         element: (
           <ProtectedRoute>
             <AccountPage />
